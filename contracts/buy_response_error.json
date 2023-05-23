@@ -1,0 +1,8 @@
+{
+    "method": "POST",
+    "http-code": 402,
+    "description": "Erro no pagamento",
+    "body": {
+        "error-description": "string"
+    }
+}

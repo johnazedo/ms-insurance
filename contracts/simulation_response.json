@@ -1,0 +1,8 @@
+{
+    "method": "GET",
+    "http-code": 200,
+    "body": {
+        "value-per-month": "float",
+        "franchise": "float"
+    }
+}

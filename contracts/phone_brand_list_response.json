@@ -1,0 +1,12 @@
+{
+    "method": "GET",
+    "http-code": 200,
+    "body": {
+        "list-cellphone-brands": [
+            {
+                "code": "string",
+                "name": "string"
+            }
+        ]
+    }
+}

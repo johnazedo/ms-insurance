@@ -1,0 +1,8 @@
+{
+    "method" : "GET",
+    "body": {
+        "user-id" : "string",
+        "cellphone-brand-code" : "string",
+        "cellphone-model-code" : "string"
+    }   
+}

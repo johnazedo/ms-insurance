@@ -1,0 +1,12 @@
+{
+    "method": "POST",
+    "http-code": 200,
+    "description": "Pagamento bem sucedido, devolvendo o recibo",
+    "body": {
+        "cellphone-model": "string",
+        "cellphone-brand": "string",
+        "value-per-month": "float",
+        "franchise": "float",
+        "payment-id": "string" 
+    }
+}

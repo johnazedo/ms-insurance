@@ -1,0 +1,8 @@
+{
+    "method": "POST",
+    "http-code": 200,
+    "body": {
+        "status" : "[WAITING_FRANCHISE_PAYMENT, SUCCESS, FAILURE]",
+        "description": "string"
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "method" : "GET",
+    "body": {
+        "cellphone-brand-code-selected" : "string"
+    }   
+}

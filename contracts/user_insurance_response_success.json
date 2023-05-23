@@ -1,0 +1,12 @@
+{
+    "method": "GET",
+    "http-code": 200,
+    "body": {
+        "cellphone-brand": "string",
+        "cellphone-model": "string",
+        "value-per-month": "float",
+        "franchise": "float",
+        "validity": "string [date]",
+        "status": "[CANCELED, ACTIVE]"
+    }
+}

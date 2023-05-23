@@ -1,0 +1,9 @@
+{
+    "method" : "POST",
+    "body": {
+        "user-id" : "string",
+        "police-report": "file",
+        "date-report" : "string [date]",
+        "description-report": "string"
+    }   
+}
