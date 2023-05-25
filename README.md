@@ -3,19 +3,19 @@
 ## Proteção para celular: 
 
 *Endpoints (Oferta):*
-| Endpoint | Descrição |
-| -------- | --------- |
-| insurance/cellphone/v1/simulation | Receber a marca e modelo e retornar o preço do valor e da franquia |
-| insurance/cellphone/v1/buy | Contratar o seguro, gerando um recibo |
-| insurance/cellphone/v1/phone-brand-list | Retorna uma lista com todas as marcas válidas |
-| insurance/cellphone/v1/phone-model-list | Retorna uma lista com todas os modelos válidos |
+| Endpoint | Http Method | Descrição |
+| -------- | --------- | --------- |
+| insurance/cellphone/v1/simulation | GET | Receber a marca e modelo e retornar o preço do valor e da franquia |
+| insurance/cellphone/v1/buy | POST | Contratar o seguro, gerando um recibo |
+| insurance/cellphone/v1/phone-brand-list | GET | Retorna uma lista com todas as marcas válidas |
+| insurance/cellphone/v1/phone-model-list | GET | Retorna uma lista com todas os modelos válidos |
 
 *Endpoints (Gestão):*
-| Endpoint | Descrição |
-| -------- | --------- | 
-| insurance/cellphone/v1/cancel | Retornar um feedback dizendo que o seguro foi cancelado |
-| insurance/cellphone/v1/claim | Acionar o sinistro passando o dados necessários |
-| insurance/cellphone/v1/user-insurance | Retorna os dados do seguro dele, se ele não tiver seguro retorna um 404
+| Endpoint | Http Method | Descrição |
+| -------- | --------- | ----------- |
+| insurance/cellphone/v1/cancel | PUT | Retornar um feedback dizendo que o seguro foi cancelado |
+| insurance/cellphone/v1/claim | POST | Acionar o sinistro passando o dados necessários |
+| insurance/cellphone/v1/user-insurance | GET | Retorna os dados do seguro dele, se ele não tiver seguro retorna um 404
 
 ### Casos de uso
 

@@ -1,5 +1,5 @@
 {
-    "method": "POST",
+    "method": "PUT",
     "http-code": 200,
     "body": {
         "canceled": "boolean"
