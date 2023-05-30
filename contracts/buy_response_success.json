@@ -7,6 +7,7 @@
         "cellphone-brand": "string",
         "value-per-month": "float",
         "franchise": "float",
-        "payment-id": "string" 
+        "payment-id": "string",
+        "user-id": "string"
     }
 }

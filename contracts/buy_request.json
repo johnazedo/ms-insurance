@@ -1,6 +1,8 @@
 {
     "method" : "POST",
     "body": {
-        "user-id" : "string"
+        "user-id" : "string",
+        "cellphone-brand-code" : "string",
+        "cellphone-model-code" : "string"
     }   
 }

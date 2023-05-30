@@ -1,0 +1,260 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "MS with insurance features",
+        "title": "ms-insurance",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "João Pedro Limão",
+            "email": "joao.limao.701@ufrn.edu.br"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "172.17.136.193:8000",
+    "basePath": "/",
+    "paths": {
+        "/brands": {
+            "get": {
+                "description": "Get phone brands list.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PhoneList"
+                ],
+                "summary": "Get phone brands list.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/phonelist.Brand"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/buy": {
+            "post": {
+                "description": "Buy new insurance.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Simulation"
+                ],
+                "summary": "Buy new insurance.",
+                "parameters": [
+                    {
+                        "description": "Buy a new insurance",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/simulation.Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/simulation.BuyResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/models": {
+            "get": {
+                "description": "Get phone models list.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PhoneList"
+                ],
+                "summary": "Get phone models list.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "A brand code of cellphone",
+                        "name": "cellphone-brand-code",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/phonelist.ModelResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/simulation": {
+            "post": {
+                "description": "Show simulation data.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Simulation"
+                ],
+                "summary": "Show simulation data.",
+                "parameters": [
+                    {
+                        "description": "Resquest to simulation info",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/simulation.Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/simulation.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "phonelist.Brand": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "phonelist.Model": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "phonelist.ModelResponse": {
+            "type": "object",
+            "properties": {
+                "brand-code": {
+                    "type": "string"
+                },
+                "brand-name": {
+                    "type": "string"
+                },
+                "list-cellphone-model": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/phonelist.Model"
+                    }
+                }
+            }
+        },
+        "simulation.BuyResponse": {
+            "type": "object",
+            "properties": {
+                "cellphone-brand-code": {
+                    "type": "string"
+                },
+                "cellphone-model-code": {
+                    "type": "string"
+                },
+                "franchise": {
+                    "type": "number"
+                },
+                "payment-id": {
+                    "type": "string"
+                },
+                "user-id": {
+                    "type": "string"
+                },
+                "value-per-month": {
+                    "type": "number"
+                }
+            }
+        },
+        "simulation.Request": {
+            "type": "object",
+            "required": [
+                "cellphone-brand-code",
+                "cellphone-model-code",
+                "user-id"
+            ],
+            "properties": {
+                "cellphone-brand-code": {
+                    "type": "string"
+                },
+                "cellphone-model-code": {
+                    "type": "string"
+                },
+                "user-id": {
+                    "type": "string"
+                }
+            }
+        },
+        "simulation.Response": {
+            "type": "object",
+            "properties": {
+                "cellphone-brand-code": {
+                    "type": "string"
+                },
+                "cellphone-model-code": {
+                    "type": "string"
+                },
+                "franchise": {
+                    "type": "number"
+                },
+                "user-id": {
+                    "type": "string"
+                },
+                "value-per-month": {
+                    "type": "number"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "JWT": {
+            "type": "apiKey",
+            "name": "token",
+            "in": "header"
+        }
+    }
+}

@@ -1,0 +1,171 @@
+basePath: /
+definitions:
+  phonelist.Brand:
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+    type: object
+  phonelist.Model:
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+    type: object
+  phonelist.ModelResponse:
+    properties:
+      brand-code:
+        type: string
+      brand-name:
+        type: string
+      list-cellphone-model:
+        items:
+          $ref: '#/definitions/phonelist.Model'
+        type: array
+    type: object
+  simulation.BuyResponse:
+    properties:
+      cellphone-brand-code:
+        type: string
+      cellphone-model-code:
+        type: string
+      franchise:
+        type: number
+      payment-id:
+        type: string
+      user-id:
+        type: string
+      value-per-month:
+        type: number
+    type: object
+  simulation.Request:
+    properties:
+      cellphone-brand-code:
+        type: string
+      cellphone-model-code:
+        type: string
+      user-id:
+        type: string
+    required:
+    - cellphone-brand-code
+    - cellphone-model-code
+    - user-id
+    type: object
+  simulation.Response:
+    properties:
+      cellphone-brand-code:
+        type: string
+      cellphone-model-code:
+        type: string
+      franchise:
+        type: number
+      user-id:
+        type: string
+      value-per-month:
+        type: number
+    type: object
+host: 172.17.136.193:8000
+info:
+  contact:
+    email: joao.limao.701@ufrn.edu.br
+    name: João Pedro Limão
+  description: MS with insurance features
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: ms-insurance
+  version: "1.0"
+paths:
+  /brands:
+    get:
+      consumes:
+      - '*/*'
+      description: Get phone brands list.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/phonelist.Brand'
+            type: array
+      summary: Get phone brands list.
+      tags:
+      - PhoneList
+  /buy:
+    post:
+      consumes:
+      - '*/*'
+      description: Buy new insurance.
+      parameters:
+      - description: Buy a new insurance
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/simulation.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/simulation.BuyResponse'
+      summary: Buy new insurance.
+      tags:
+      - Simulation
+  /models:
+    get:
+      consumes:
+      - '*/*'
+      description: Get phone models list.
+      parameters:
+      - description: A brand code of cellphone
+        in: query
+        name: cellphone-brand-code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/phonelist.ModelResponse'
+      summary: Get phone models list.
+      tags:
+      - PhoneList
+  /simulation:
+    post:
+      consumes:
+      - '*/*'
+      description: Show simulation data.
+      parameters:
+      - description: Resquest to simulation info
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/simulation.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/simulation.Response'
+      summary: Show simulation data.
+      tags:
+      - Simulation
+schemes:
+- http
+securityDefinitions:
+  JWT:
+    in: header
+    name: token
+    type: apiKey
+swagger: "2.0"

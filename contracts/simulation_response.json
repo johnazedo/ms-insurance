@@ -1,7 +1,10 @@
 {
-    "method": "GET",
+    "method": "POST",
     "http-code": 200,
     "body": {
+        "user-id" : "string",
+        "cellphone-brand-code" : "string",
+        "cellphone-model-code" : "string",
         "value-per-month": "float",
         "franchise": "float"
     }
