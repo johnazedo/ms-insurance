@@ -1,5 +1,35 @@
 basePath: /
 definitions:
+  cancel.Request:
+    properties:
+      user-id:
+        type: string
+    type: object
+  cancel.Response:
+    properties:
+      insurance-status:
+        type: string
+    type: object
+  getinsurance.Request:
+    properties:
+      user-id:
+        type: string
+    type: object
+  getinsurance.Response:
+    properties:
+      cellphone-brand:
+        type: string
+      cellphone-model:
+        type: string
+      franchise:
+        type: number
+      status:
+        type: string
+      validity:
+        type: string
+      value-per-month:
+        type: number
+    type: object
   phonelist.Brand:
     properties:
       code:
@@ -66,7 +96,7 @@ definitions:
       value-per-month:
         type: number
     type: object
-host: 172.17.136.193:8000
+host: 172.17.134.230:8000
 info:
   contact:
     email: joao.limao.701@ufrn.edu.br
@@ -118,6 +148,50 @@ paths:
       summary: Buy new insurance.
       tags:
       - Simulation
+  /cancel:
+    post:
+      consumes:
+      - '*/*'
+      description: Cancel insurance.
+      parameters:
+      - description: Send user id to cancel insurance
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/cancel.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/cancel.Response'
+      summary: Cancel insurance.
+      tags:
+      - Insurance Management
+  /insurance:
+    post:
+      consumes:
+      - '*/*'
+      description: Get Insurance information.
+      parameters:
+      - description: Send user id to get insurance information
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/getinsurance.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/getinsurance.Response'
+      summary: Get Insurance information.
+      tags:
+      - Insurance Management
   /models:
     get:
       consumes:

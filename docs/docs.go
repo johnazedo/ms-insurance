@@ -84,6 +84,74 @@ const docTemplate = `{
                 }
             }
         },
+        "/cancel": {
+            "post": {
+                "description": "Cancel insurance.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Insurance Management"
+                ],
+                "summary": "Cancel insurance.",
+                "parameters": [
+                    {
+                        "description": "Send user id to cancel insurance",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/cancel.Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/cancel.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/insurance": {
+            "post": {
+                "description": "Get Insurance information.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Insurance Management"
+                ],
+                "summary": "Get Insurance information.",
+                "parameters": [
+                    {
+                        "description": "Send user id to get insurance information",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/getinsurance.Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/getinsurance.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/models": {
             "get": {
                 "description": "Get phone models list.",
@@ -152,6 +220,53 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "cancel.Request": {
+            "type": "object",
+            "properties": {
+                "user-id": {
+                    "type": "string"
+                }
+            }
+        },
+        "cancel.Response": {
+            "type": "object",
+            "properties": {
+                "insurance-status": {
+                    "type": "string"
+                }
+            }
+        },
+        "getinsurance.Request": {
+            "type": "object",
+            "properties": {
+                "user-id": {
+                    "type": "string"
+                }
+            }
+        },
+        "getinsurance.Response": {
+            "type": "object",
+            "properties": {
+                "cellphone-brand": {
+                    "type": "string"
+                },
+                "cellphone-model": {
+                    "type": "string"
+                },
+                "franchise": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "validity": {
+                    "type": "string"
+                },
+                "value-per-month": {
+                    "type": "number"
+                }
+            }
+        },
         "phonelist.Brand": {
             "type": "object",
             "properties": {
@@ -266,7 +381,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "172.17.136.193:8000",
+	Host:             "172.17.134.230:8000",
 	BasePath:         "/",
 	Schemes:          []string{"http"},
 	Title:            "ms-insurance",

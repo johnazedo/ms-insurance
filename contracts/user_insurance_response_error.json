@@ -1,5 +1,5 @@
 {
-    "method": "GET",
+    "method": "POST",
     "http-code": 404,
     "description": "Usuário não encontrado ou que não tenha seguro",
     "body": {

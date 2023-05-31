@@ -1,7 +1,7 @@
 {
-    "method": "PUT",
+    "method": "POST",
     "http-code": 200,
     "body": {
-        "canceled": "boolean"
+        "insurance-status": "boolean"
     }
 }

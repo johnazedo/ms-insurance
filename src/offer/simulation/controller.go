@@ -31,7 +31,7 @@ func (ctrl *Controller) GetInsuranceSimulation(ctx *gin.Context) {
 		UserID: request.UserID,
 		PhoneBrandCode: request.PhoneBrandCode,
 		PhoneModelCode: request.PhoneModelCode,
-		ValuePerMonth: 2000.00,
+		ValuePerMonth: 60.00,
 		Franchise: 1200.00,
 	}
 
@@ -59,7 +59,7 @@ func (ctrl *Controller) BuyInsurance(ctx *gin.Context) {
 		UserID: request.UserID,
 		PhoneBrandCode: request.PhoneBrandCode,
 		PhoneModelCode: request.PhoneModelCode,
-		ValuePerMonth: 2000.00,
+		ValuePerMonth: 60.00,
 		Franchise: 1200.00,
 	}
 

@@ -1,5 +1,5 @@
 {
-    "method": "GET",
+    "method": "POST",
     "http-code": 200,
     "body": {
         "cellphone-brand": "string",

@@ -7,15 +7,15 @@
 | -------- | --------- | --------- |
 | insurance/cellphone/v1/simulation | POST | Receber a marca e modelo e retornar o preço do valor e da franquia |
 | insurance/cellphone/v1/buy | POST | Contratar o seguro, gerando um recibo |
-| insurance/cellphone/v1/phone-brand-list | GET | Retorna uma lista com todas as marcas válidas |
-| insurance/cellphone/v1/phone-model-list | GET | Retorna uma lista com todas os modelos válidos |
+| insurance/cellphone/v1/brands | GET | Retorna uma lista com todas as marcas válidas |
+| insurance/cellphone/v1/models | GET | Retorna uma lista com todas os modelos válidos |
 
 *Endpoints (Gestão):*
 | Endpoint | Http Method | Descrição |
 | -------- | --------- | ----------- |
-| insurance/cellphone/v1/cancel | PUT | Retornar um feedback dizendo que o seguro foi cancelado |
+| insurance/cellphone/v1/cancel | POST | Retornar um feedback dizendo que o seguro foi cancelado |
 | insurance/cellphone/v1/claim | POST | Acionar o sinistro passando o dados necessários |
-| insurance/cellphone/v1/user-insurance | GET | Retorna os dados do seguro dele, se ele não tiver seguro retorna um 404
+| insurance/cellphone/v1/insurance | POST | Retorna os dados do seguro dele, se ele não tiver seguro retorna um 404
 
 ### Casos de uso
 
