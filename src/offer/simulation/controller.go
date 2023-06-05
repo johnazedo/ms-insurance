@@ -6,7 +6,7 @@ import (
 )
 
 type Controller struct {
-	// Put usecase here
+	getPhoneInformationUseCase GetPhoneInformationUseCase
 }
 
 // GetInsuranceSimulation godoc
@@ -21,20 +21,18 @@ type Controller struct {
 // @Router /simulation [post]
 func (ctrl *Controller) GetInsuranceSimulation(ctx *gin.Context) {
 	var request Request
-
 	if err := ctx.BindJSON(&request); err != nil {
 		ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
-	response := Response {
-		UserID: request.UserID,
-		PhoneBrandCode: request.PhoneBrandCode,
-		PhoneModelCode: request.PhoneModelCode,
-		ValuePerMonth: 60.00,
-		Franchise: 1200.00,
+	phoneInfo, err := ctrl.getPhoneInformationUseCase.Invoke(request.PhoneBrandCode, request.PhoneModelCode)
+	if err != nil {
+		ctx.AbortWithError(http.StatusInternalServerError, err)
+		return
 	}
 
+	response := MapperFromPhoneInfoToResponse(phoneInfo)
 	ctx.IndentedJSON(http.StatusOK, response)
 }
 
@@ -55,18 +53,16 @@ func (ctrl *Controller) BuyInsurance(ctx *gin.Context) {
 		return
 	}
 
-	response := Response {
-		UserID: request.UserID,
-		PhoneBrandCode: request.PhoneBrandCode,
-		PhoneModelCode: request.PhoneModelCode,
-		ValuePerMonth: 60.00,
-		Franchise: 1200.00,
+	phoneInfo, err := ctrl.getPhoneInformationUseCase.Invoke(request.PhoneBrandCode, request.PhoneModelCode)
+	if err != nil {
+		ctx.AbortWithError(http.StatusInternalServerError, err)
+		return
 	}
 
-	buyResponse := BuyResponse {
-		Response: response,
+	response := BuyResponse {
+		Response: MapperFromPhoneInfoToResponse(phoneInfo),
 		PaymentID: "uuasdjf-aidfnkd-adsfksn",
 	}
 
-	ctx.IndentedJSON(http.StatusOK, buyResponse)
+	ctx.IndentedJSON(http.StatusOK, response)
 }
