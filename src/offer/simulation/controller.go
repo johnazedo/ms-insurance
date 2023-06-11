@@ -6,7 +6,8 @@ import (
 )
 
 type Controller struct {
-	getPhoneInformationUseCase GetPhoneInformationUseCase
+	GetPhoneInformationUseCase
+	BuyInsuranceUseCase
 }
 
 // GetInsuranceSimulation godoc
@@ -26,7 +27,7 @@ func (ctrl *Controller) GetInsuranceSimulation(ctx *gin.Context) {
 		return
 	}
 
-	phoneInfo, err := ctrl.getPhoneInformationUseCase.Invoke(request.PhoneBrandCode, request.PhoneModelCode)
+	phoneInfo, err := ctrl.GetPhoneInformationUseCase.Invoke(request.PhoneBrandCode, request.PhoneModelCode)
 	if err != nil {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return
@@ -53,7 +54,7 @@ func (ctrl *Controller) BuyInsurance(ctx *gin.Context) {
 		return
 	}
 
-	phoneInfo, err := ctrl.getPhoneInformationUseCase.Invoke(request.PhoneBrandCode, request.PhoneModelCode)
+	phoneInfo, err := ctrl.BuyInsuranceUseCase.Invoke(request.UserID, request.PhoneBrandCode, request.PhoneModelCode)
 	if err != nil {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return
