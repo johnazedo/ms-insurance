@@ -1,12 +1,20 @@
 package getinsurance
 
 import (
-	"net/http"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
-type Controller struct {
-	// Put usecase here
+func GetInsuranceController() controller {
+	return controller{
+		GetInsuranceInfoUseCase: GetInsuranceInfoUseCase{
+			InsuranceRepository: &InsuranceRepositoryImpl{},
+		},
+	}
+}
+
+type controller struct {
+	GetInsuranceInfoUseCase
 }
 
 // GetInsuranceInformation godoc
@@ -19,7 +27,7 @@ type Controller struct {
 // @Param body body Request true "Send user id to get insurance information"
 // @Success 200 {object} Response
 // @Router /insurance [post]
-func (ctrl *Controller) GetInsuranceInformation(ctx *gin.Context) {
+func (ctrl *controller) GetInsuranceInformation(ctx *gin.Context) {
 	var request Request
 
 	if err := ctx.BindJSON(&request); err != nil {
@@ -27,13 +35,19 @@ func (ctrl *Controller) GetInsuranceInformation(ctx *gin.Context) {
 		return
 	}
 
-	response := Response {
-		PhoneBrand: "Samsung",
-		PhoneModel: "S22 128",
-		ValuePerMonth: 60.00,
-		Franchise: 1200.00,
-		Validity: "11/05/2024",
-		Status: "ACTIVE",
+	insuranceInfo, err := ctrl.GetInsuranceInfoUseCase.Invoke(request.UserID)
+	if err != nil {
+		ctx.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	response := Response{
+		PhoneBrand:    insuranceInfo.PhoneBrand,
+		PhoneModel:    insuranceInfo.PhoneModel,
+		ValuePerMonth: insuranceInfo.ValuePerMonth,
+		Franchise:     insuranceInfo.Franchise,
+		Validity:      insuranceInfo.Validity,
+		Status:        insuranceInfo.Status,
 	}
 
 	ctx.IndentedJSON(http.StatusOK, response)

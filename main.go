@@ -34,7 +34,7 @@ func main() {
 	simulationController := simulation.GetSimulationController()
 	phonelistController := phonelist.GetPhoneListController()
 	cancelController := cancel.Controller{}
-	getinsuranceController := getinsurance.Controller{}
+	getinsuranceController := getinsurance.GetInsuranceController()
 
 	router := gin.Default()
 	router.POST("/simulation", simulationController.GetInsuranceSimulation)
