@@ -29,3 +29,7 @@ type PhoneInfo struct {
 	ValuePerMonth  float64
 	Franchise 	   float64
 }
+
+type PaymentInfo struct {
+	ID string
+}

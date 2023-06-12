@@ -5,7 +5,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Controller struct {
+func GetSimulationController() controller {
+	phoneInfoRepository := &PhoneInfoRepositoryImpl{}
+	return controller {
+		GetPhoneInformationUseCase: GetPhoneInformationUseCase{
+			PhoneInfoRepository: phoneInfoRepository,
+		},
+		BuyInsuranceUseCase: BuyInsuranceUseCase{
+			PaymentRepository: &PaymentRepositoryImpl{},
+			BuyInsuranceRepository: &BuyInsuranceRepositoryImpl{},
+			PhoneInfoRepository: phoneInfoRepository,
+		},
+	}
+}
+
+type controller struct {
 	GetPhoneInformationUseCase
 	BuyInsuranceUseCase
 }
@@ -20,7 +34,7 @@ type Controller struct {
 // @Param body body Request true "Resquest to simulation info"
 // @Success 200 {object} Response
 // @Router /simulation [post]
-func (ctrl *Controller) GetInsuranceSimulation(ctx *gin.Context) {
+func (ctrl *controller) GetInsuranceSimulation(ctx *gin.Context) {
 	var request Request
 	if err := ctx.BindJSON(&request); err != nil {
 		ctx.AbortWithError(http.StatusBadRequest, err)
@@ -46,7 +60,7 @@ func (ctrl *Controller) GetInsuranceSimulation(ctx *gin.Context) {
 // @Produce json
 // @Success 200 {object} BuyResponse
 // @Router /buy [post]
-func (ctrl *Controller) BuyInsurance(ctx *gin.Context) {
+func (ctrl *controller) BuyInsurance(ctx *gin.Context) {
 	var request Request
 
 	if err := ctx.BindJSON(&request); err != nil {
@@ -54,7 +68,7 @@ func (ctrl *Controller) BuyInsurance(ctx *gin.Context) {
 		return
 	}
 
-	phoneInfo, err := ctrl.BuyInsuranceUseCase.Invoke(request.UserID, request.PhoneBrandCode, request.PhoneModelCode)
+	phoneInfo, paymentInfo, err := ctrl.BuyInsuranceUseCase.Invoke(request.UserID, request.PhoneBrandCode, request.PhoneModelCode)
 	if err != nil {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return
@@ -62,7 +76,7 @@ func (ctrl *Controller) BuyInsurance(ctx *gin.Context) {
 
 	response := BuyResponse {
 		Response: MapperFromPhoneInfoToResponse(phoneInfo),
-		PaymentID: "uuasdjf-aidfnkd-adsfksn",
+		PaymentID: paymentInfo.ID,
 	}
 
 	ctx.IndentedJSON(http.StatusOK, response)

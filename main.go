@@ -31,8 +31,8 @@ import (
 
 // @schemes http
 func main() {
-	simulationController := simulation.Controller{}
-	phonelistController := phonelist.Controller{}
+	simulationController := simulation.GetSimulationController()
+	phonelistController := phonelist.GetPhoneListController()
 	cancelController := cancel.Controller{}
 	getinsuranceController := getinsurance.Controller{}
 
