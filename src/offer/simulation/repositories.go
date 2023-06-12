@@ -13,8 +13,10 @@ func (r *PhoneInfoRepositoryImpl) SearchByBrandAndModel(phoneBrand string, phone
 
 type PaymentRepositoryImpl struct {}
 
-func (r *PaymentRepositoryImpl) MakePayment(userID string, value float64) (string, error) {
-	return "uuasdjf-aidfnkd-adsfksn", nil
+func (r *PaymentRepositoryImpl) MakePayment(userID string, value float64) (*PaymentInfo, error) {
+	return &PaymentInfo{
+		ID: "uuasdjf-aidfnkd-adsfksn",
+	}, nil
 }
 
 type BuyInsuranceRepositoryImpl struct {}
