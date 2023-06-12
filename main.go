@@ -4,8 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	simulation "github.com/johnazedo/ms-insurance/src/offer/simulation"
 	phonelist "github.com/johnazedo/ms-insurance/src/offer/phonelist"
-	cancel "github.com/johnazedo/ms-insurance/src/xp/cancel"
-	getinsurance "github.com/johnazedo/ms-insurance/src/xp/getinsurance"
+	insurance "github.com/johnazedo/ms-insurance/src/xp/insurance"
 	swaggerFiles "github.com/swaggo/files"
    	swagger "github.com/swaggo/gin-swagger"
 	_ "github.com/johnazedo/ms-insurance/docs"
@@ -33,8 +32,7 @@ import (
 func main() {
 	simulationController := simulation.GetSimulationController()
 	phonelistController := phonelist.GetPhoneListController()
-	cancelController := cancel.Controller{}
-	getinsuranceController := getinsurance.GetInsuranceController()
+	insuranceController := insurance.GetInsuranceController()
 
 	router := gin.Default()
 	router.POST("/simulation", simulationController.GetInsuranceSimulation)
@@ -42,8 +40,8 @@ func main() {
 	router.GET("/brands", phonelistController.GetPhoneBrands)
 	router.GET("/models", phonelistController.GetPhoneModels)
 
-	router.POST("/cancel", cancelController.CancelInsurance)
-	router.POST("/insurance", getinsuranceController.GetInsuranceInformation)
+	router.POST("/cancel", insuranceController.CancelInsurance)
+	router.POST("/insurance", insuranceController.GetInsuranceInformation)
 
 	router.GET("/swagger/*any", swagger.WrapHandler(swaggerFiles.Handler))
 	

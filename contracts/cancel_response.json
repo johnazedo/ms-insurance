@@ -2,6 +2,11 @@
     "method": "POST",
     "http-code": 200,
     "body": {
-        "insurance-status": "boolean"
+        "cellphone-brand": "string",
+        "cellphone-model": "string",
+        "value-per-month": "float",
+        "franchise": "float",
+        "validity": "string [date]",
+        "status": "[CANCELED, ACTIVE]"
     }
 }

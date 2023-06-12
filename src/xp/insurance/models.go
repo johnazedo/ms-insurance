@@ -1,4 +1,4 @@
-package getinsurance
+package insurance
 
 type Request struct {
 	UserID string `json:"user-id"`
