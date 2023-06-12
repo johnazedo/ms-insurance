@@ -104,7 +104,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/cancel.Request"
+                            "$ref": "#/definitions/insurance.Request"
                         }
                     }
                 ],
@@ -112,7 +112,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/cancel.Response"
+                            "$ref": "#/definitions/insurance.Response"
                         }
                     }
                 }
@@ -138,7 +138,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/getinsurance.Request"
+                            "$ref": "#/definitions/insurance.Request"
                         }
                     }
                 ],
@@ -146,7 +146,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/getinsurance.Response"
+                            "$ref": "#/definitions/insurance.Response"
                         }
                     }
                 }
@@ -220,7 +220,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "cancel.Request": {
+        "insurance.Request": {
             "type": "object",
             "properties": {
                 "user-id": {
@@ -228,23 +228,7 @@ const docTemplate = `{
                 }
             }
         },
-        "cancel.Response": {
-            "type": "object",
-            "properties": {
-                "insurance-status": {
-                    "type": "string"
-                }
-            }
-        },
-        "getinsurance.Request": {
-            "type": "object",
-            "properties": {
-                "user-id": {
-                    "type": "string"
-                }
-            }
-        },
-        "getinsurance.Response": {
+        "insurance.Response": {
             "type": "object",
             "properties": {
                 "cellphone-brand": {
@@ -309,19 +293,16 @@ const docTemplate = `{
         "simulation.BuyResponse": {
             "type": "object",
             "properties": {
-                "cellphone-brand-code": {
+                "cellphone-brand": {
                     "type": "string"
                 },
-                "cellphone-model-code": {
+                "cellphone-model": {
                     "type": "string"
                 },
                 "franchise": {
                     "type": "number"
                 },
                 "payment-id": {
-                    "type": "string"
-                },
-                "user-id": {
                     "type": "string"
                 },
                 "value-per-month": {
@@ -351,17 +332,14 @@ const docTemplate = `{
         "simulation.Response": {
             "type": "object",
             "properties": {
-                "cellphone-brand-code": {
+                "cellphone-brand": {
                     "type": "string"
                 },
-                "cellphone-model-code": {
+                "cellphone-model": {
                     "type": "string"
                 },
                 "franchise": {
                     "type": "number"
-                },
-                "user-id": {
-                    "type": "string"
                 },
                 "value-per-month": {
                     "type": "number"

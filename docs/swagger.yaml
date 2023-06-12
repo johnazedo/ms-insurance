@@ -1,21 +1,11 @@
 basePath: /
 definitions:
-  cancel.Request:
+  insurance.Request:
     properties:
       user-id:
         type: string
     type: object
-  cancel.Response:
-    properties:
-      insurance-status:
-        type: string
-    type: object
-  getinsurance.Request:
-    properties:
-      user-id:
-        type: string
-    type: object
-  getinsurance.Response:
+  insurance.Response:
     properties:
       cellphone-brand:
         type: string
@@ -57,15 +47,13 @@ definitions:
     type: object
   simulation.BuyResponse:
     properties:
-      cellphone-brand-code:
+      cellphone-brand:
         type: string
-      cellphone-model-code:
+      cellphone-model:
         type: string
       franchise:
         type: number
       payment-id:
-        type: string
-      user-id:
         type: string
       value-per-month:
         type: number
@@ -85,14 +73,12 @@ definitions:
     type: object
   simulation.Response:
     properties:
-      cellphone-brand-code:
+      cellphone-brand:
         type: string
-      cellphone-model-code:
+      cellphone-model:
         type: string
       franchise:
         type: number
-      user-id:
-        type: string
       value-per-month:
         type: number
     type: object
@@ -159,14 +145,14 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/cancel.Request'
+          $ref: '#/definitions/insurance.Request'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/cancel.Response'
+            $ref: '#/definitions/insurance.Response'
       summary: Cancel insurance.
       tags:
       - Insurance Management
@@ -181,14 +167,14 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/getinsurance.Request'
+          $ref: '#/definitions/insurance.Request'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/getinsurance.Response'
+            $ref: '#/definitions/insurance.Response'
       summary: Get Insurance information.
       tags:
       - Insurance Management

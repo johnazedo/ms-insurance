@@ -4,12 +4,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetClaimController() controller {
+	return controller{}
+}
 
-type Controller struct {
+type controller struct {
 	// Put use case here
 }
 
 
-func (ctrl *Controller) ClaimInsurance(ctx *gin.Context) {
+func (ctrl *controller) ClaimInsurance(ctx *gin.Context) {
 	
 }
