@@ -47,7 +47,7 @@ func (r *CellphonesAvailableRepositoryImpl) GetListOfModels(brandCode string) ([
 }
 
 func (r *CellphonesAvailableRepositoryImpl) GetBrandByCode(brandCode string) (Brand, error) {
-	return Brand {
+	return Brand{
 		Code: "0001",
 		Name: "Sansumg",
 	}, nil

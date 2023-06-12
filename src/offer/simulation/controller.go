@@ -1,20 +1,20 @@
 package simulation
 
 import (
-	"net/http"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func GetSimulationController() controller {
 	phoneInfoRepository := &PhoneInfoRepositoryImpl{}
-	return controller {
+	return controller{
 		GetPhoneInformationUseCase: GetPhoneInformationUseCase{
 			PhoneInfoRepository: phoneInfoRepository,
 		},
 		BuyInsuranceUseCase: BuyInsuranceUseCase{
-			PaymentRepository: &PaymentRepositoryImpl{},
+			PaymentRepository:      &PaymentRepositoryImpl{},
 			BuyInsuranceRepository: &BuyInsuranceRepositoryImpl{},
-			PhoneInfoRepository: phoneInfoRepository,
+			PhoneInfoRepository:    phoneInfoRepository,
 		},
 	}
 }
@@ -74,8 +74,8 @@ func (ctrl *controller) BuyInsurance(ctx *gin.Context) {
 		return
 	}
 
-	response := BuyResponse {
-		Response: MapperFromPhoneInfoToResponse(phoneInfo),
+	response := BuyResponse{
+		Response:  MapperFromPhoneInfoToResponse(phoneInfo),
 		PaymentID: paymentInfo.ID,
 	}
 

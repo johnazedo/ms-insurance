@@ -14,14 +14,13 @@ func (uc *GetPhoneInformationUseCase) Invoke(phoneBrand string, phoneModel strin
 	return uc.SearchByBrandAndModel(phoneBrand, phoneModel)
 }
 
-
 // Buy inusrance usecases
 type PaymentRepository interface {
 	MakePayment(userID string, value float64) (*PaymentInfo, error)
 }
 
 type BuyInsuranceRepository interface {
-	SaveInsurance(userID string, paymentID string, phoneBrand string, phoneModel string) error 
+	SaveInsurance(userID string, paymentID string, phoneBrand string, phoneModel string) error
 }
 
 type BuyInsuranceUseCase struct {
@@ -29,7 +28,6 @@ type BuyInsuranceUseCase struct {
 	BuyInsuranceRepository
 	PhoneInfoRepository
 }
-
 
 // BuyInsuranceUseCase.Invoke is a method to buy a cellphone insurance and return the infomation of cellphone and payment.
 // On this function we need to get information of phone with the brand and model by code and use the value per month to
