@@ -1,6 +1,9 @@
 package simulation
 
 // Simulation usecases
+
+// This repository is necessary to get cellphone info using the brand and model
+// chosen by client
 type PhoneInfoRepository interface {
 	SearchByBrandAndModel(phoneBrand string, phoneModel string) (*PhoneInfo, error)
 }
@@ -15,10 +18,13 @@ func (uc *GetPhoneInformationUseCase) Invoke(phoneBrand string, phoneModel strin
 }
 
 // Buy inusrance usecases
+
+// This repository will be implemented to communicate with payment microservice
 type PaymentRepository interface {
 	MakePayment(userID string, value float64) (*PaymentInfo, error)
 }
 
+// This repository will be used to store data about insurance on databse
 type BuyInsuranceRepository interface {
 	SaveInsurance(userID string, paymentID string, phoneBrand string, phoneModel string) error
 }

@@ -1,5 +1,6 @@
 package insurance
 
+// A repository interface to retrieve data of a insurance and cancel it too
 type InsuranceRepository interface {
 	GetInsuranceInfo(userID string) (*InsuranceInfo, error)
 	CancelInsurance(userID string) (*InsuranceInfo, error)
