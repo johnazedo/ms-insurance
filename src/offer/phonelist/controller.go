@@ -5,21 +5,21 @@ import (
 	"net/http"
 )
 
-func GetPhoneListController() controller {
+func GetPhoneListController() Controller {
 	repository := &CellphonesAvailableRepositoryImpl{}
-	return controller{
-		GetListOfBrandsUseCase: GetListOfBrandsUseCase{
-			CellphonesAvailableRepository: repository,
+	return Controller{
+		getListOfBrandsUseCase: GetListOfBrandsUseCase{
+			cellphonesAvailableRepository: repository,
 		},
-		GetListOfModelsUseCase: GetListOfModelsUseCase{
-			CellphonesAvailableRepository: repository,
+		getListOfModelsUseCase: GetListOfModelsUseCase{
+			cellphonesAvailableRepository: repository,
 		},
 	}
 }
 
-type controller struct {
-	GetListOfBrandsUseCase
-	GetListOfModelsUseCase
+type Controller struct {
+	getListOfBrandsUseCase GetListOfBrandsUseCase
+	getListOfModelsUseCase GetListOfModelsUseCase
 }
 
 // GetPhoneBrands godoc
@@ -30,8 +30,8 @@ type controller struct {
 // @Produce json
 // @Success 200 {array} Brand
 // @Router /brands [get]
-func (ctrl *controller) GetPhoneBrands(ctx *gin.Context) {
-	response, err := ctrl.GetListOfBrandsUseCase.Invoke()
+func (ctrl *Controller) GetPhoneBrands(ctx *gin.Context) {
+	response, err := ctrl.getListOfBrandsUseCase.Invoke()
 	if err != nil {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return
@@ -49,14 +49,14 @@ func (ctrl *controller) GetPhoneBrands(ctx *gin.Context) {
 // @Param cellphone-brand-code query string true "A brand code of cellphone"
 // @Success 200 {object} ModelResponse
 // @Router /models [get]
-func (ctrl *controller) GetPhoneModels(ctx *gin.Context) {
+func (ctrl *Controller) GetPhoneModels(ctx *gin.Context) {
 	param, has := ctx.GetQuery("cellphone-brand-code")
 	if !has {
 		ctx.JSON(http.StatusBadRequest, "message: Brand code was not sent")
 		return
 	}
 
-	brand, models, err := ctrl.GetListOfModelsUseCase.Invoke(param)
+	brand, models, err := ctrl.getListOfModelsUseCase.Invoke(param)
 	if err != nil {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return

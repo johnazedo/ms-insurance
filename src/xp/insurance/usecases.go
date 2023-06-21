@@ -7,19 +7,19 @@ type InsuranceRepository interface {
 }
 
 type GetInsuranceInfoUseCase struct {
-	InsuranceRepository
+	insuranceRepository InsuranceRepository
 }
 
 // Invoke Just a proxy usecase to keep the code on the chosen architecture
 func (uc *GetInsuranceInfoUseCase) Invoke(userID string) (*InsuranceInfo, error) {
-	return uc.GetInsuranceInfo(userID)
+	return uc.insuranceRepository.GetInsuranceInfo(userID)
 }
 
 type CancelInsuranceUseCase struct {
-	InsuranceRepository
+	insuranceRepository InsuranceRepository
 }
 
 // Invoke Just a proxy usecase to keep the code on the chosen architecture
 func (uc *CancelInsuranceUseCase) Invoke(userID string) (*InsuranceInfo, error) {
-	return uc.CancelInsurance(userID)
+	return uc.insuranceRepository.CancelInsurance(userID)
 }

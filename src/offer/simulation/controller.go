@@ -5,23 +5,23 @@ import (
 	"net/http"
 )
 
-func GetSimulationController() controller {
+func GetSimulationController() Controller {
 	phoneInfoRepository := &PhoneInfoRepositoryImpl{}
-	return controller{
-		GetPhoneInformationUseCase: GetPhoneInformationUseCase{
-			PhoneInfoRepository: phoneInfoRepository,
+	return Controller{
+		getPhoneInformationUseCase: GetPhoneInformationUseCase{
+			phoneInfoRepository: phoneInfoRepository,
 		},
-		BuyInsuranceUseCase: BuyInsuranceUseCase{
-			PaymentRepository:      &PaymentRepositoryImpl{},
-			BuyInsuranceRepository: &BuyInsuranceRepositoryImpl{},
-			PhoneInfoRepository:    phoneInfoRepository,
+		buyInsuranceUseCase: BuyInsuranceUseCase{
+			paymentRepository:      &PaymentRepositoryImpl{},
+			buyInsuranceRepository: &BuyInsuranceRepositoryImpl{},
+			phoneInfoRepository:    phoneInfoRepository,
 		},
 	}
 }
 
-type controller struct {
-	GetPhoneInformationUseCase
-	BuyInsuranceUseCase
+type Controller struct {
+	getPhoneInformationUseCase GetPhoneInformationUseCase
+	buyInsuranceUseCase        BuyInsuranceUseCase
 }
 
 // GetInsuranceSimulation godoc
@@ -34,14 +34,14 @@ type controller struct {
 // @Param body body Request true "Resquest to simulation info"
 // @Success 200 {object} Response
 // @Router /simulation [post]
-func (ctrl *controller) GetInsuranceSimulation(ctx *gin.Context) {
+func (ctrl *Controller) GetInsuranceSimulation(ctx *gin.Context) {
 	var request Request
 	if err := ctx.BindJSON(&request); err != nil {
 		ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
-	phoneInfo, err := ctrl.GetPhoneInformationUseCase.Invoke(request.PhoneBrandCode, request.PhoneModelCode)
+	phoneInfo, err := ctrl.getPhoneInformationUseCase.Invoke(request.PhoneBrandCode, request.PhoneModelCode)
 	if err != nil {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return
@@ -60,7 +60,7 @@ func (ctrl *controller) GetInsuranceSimulation(ctx *gin.Context) {
 // @Produce json
 // @Success 200 {object} BuyResponse
 // @Router /buy [post]
-func (ctrl *controller) BuyInsurance(ctx *gin.Context) {
+func (ctrl *Controller) BuyInsurance(ctx *gin.Context) {
 	var request Request
 
 	if err := ctx.BindJSON(&request); err != nil {
@@ -68,7 +68,7 @@ func (ctrl *controller) BuyInsurance(ctx *gin.Context) {
 		return
 	}
 
-	phoneInfo, paymentInfo, err := ctrl.BuyInsuranceUseCase.Invoke(request.UserID, request.PhoneBrandCode, request.PhoneModelCode)
+	phoneInfo, paymentInfo, err := ctrl.buyInsuranceUseCase.Invoke(request.UserID, request.PhoneBrandCode, request.PhoneModelCode)
 	if err != nil {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return

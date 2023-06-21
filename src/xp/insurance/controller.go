@@ -5,21 +5,21 @@ import (
 	"net/http"
 )
 
-func GetInsuranceController() controller {
+func GetInsuranceController() Controller {
 	repository := InsuranceRepositoryImpl{}
-	return controller{
-		GetInsuranceInfoUseCase: GetInsuranceInfoUseCase{
-			InsuranceRepository: &repository,
+	return Controller{
+		getInsuranceInfoUseCase: GetInsuranceInfoUseCase{
+			insuranceRepository: &repository,
 		},
-		CancelInsuranceUseCase: CancelInsuranceUseCase{
-			InsuranceRepository: &repository,
+		cancelInsuranceUseCase: CancelInsuranceUseCase{
+			insuranceRepository: &repository,
 		},
 	}
 }
 
-type controller struct {
-	GetInsuranceInfoUseCase
-	CancelInsuranceUseCase
+type Controller struct {
+	getInsuranceInfoUseCase GetInsuranceInfoUseCase
+	cancelInsuranceUseCase  CancelInsuranceUseCase
 }
 
 // GetInsuranceInformation godoc
@@ -32,7 +32,7 @@ type controller struct {
 // @Param body body Request true "Send user id to get insurance information"
 // @Success 200 {object} Response
 // @Router /insurance [post]
-func (ctrl *controller) GetInsuranceInformation(ctx *gin.Context) {
+func (ctrl *Controller) GetInsuranceInformation(ctx *gin.Context) {
 	var request Request
 
 	if err := ctx.BindJSON(&request); err != nil {
@@ -40,7 +40,7 @@ func (ctrl *controller) GetInsuranceInformation(ctx *gin.Context) {
 		return
 	}
 
-	insuranceInfo, err := ctrl.GetInsuranceInfoUseCase.Invoke(request.UserID)
+	insuranceInfo, err := ctrl.getInsuranceInfoUseCase.Invoke(request.UserID)
 	if err != nil {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return
@@ -50,7 +50,6 @@ func (ctrl *controller) GetInsuranceInformation(ctx *gin.Context) {
 
 	ctx.IndentedJSON(http.StatusOK, response)
 }
-
 
 // CancelInsurance godoc
 // @Summary Cancel insurance.
@@ -62,7 +61,7 @@ func (ctrl *controller) GetInsuranceInformation(ctx *gin.Context) {
 // @Param body body Request true "Send user id to cancel insurance"
 // @Success 200 {object} Response
 // @Router /cancel [post]
-func (ctrl *controller) CancelInsurance(ctx *gin.Context) {
+func (ctrl *Controller) CancelInsurance(ctx *gin.Context) {
 	var request Request
 
 	if err := ctx.BindJSON(&request); err != nil {
@@ -70,7 +69,7 @@ func (ctrl *controller) CancelInsurance(ctx *gin.Context) {
 		return
 	}
 
-	insuranceInfo, err := ctrl.CancelInsuranceUseCase.Invoke(request.UserID)
+	insuranceInfo, err := ctrl.cancelInsuranceUseCase.Invoke(request.UserID)
 	if err != nil {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return

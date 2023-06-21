@@ -8,27 +8,27 @@ type CellphonesAvailableRepository interface {
 }
 
 type GetListOfBrandsUseCase struct {
-	CellphonesAvailableRepository
+	cellphonesAvailableRepository CellphonesAvailableRepository
 }
 
 // Invoke Just a proxy usecase to keep the code on the chosen architecture
 func (uc *GetListOfBrandsUseCase) Invoke() ([]Brand, error) {
-	return uc.GetListOfBrands()
+	return uc.cellphonesAvailableRepository.GetListOfBrands()
 }
 
 type GetListOfModelsUseCase struct {
-	CellphonesAvailableRepository
+	cellphonesAvailableRepository CellphonesAvailableRepository
 }
 
 // Invoke get the list of models for the brand. If the operation
 // was successful the function will return information about the Brand too.
 func (uc *GetListOfModelsUseCase) Invoke(brandCode string) (*Brand, []Model, error) {
-	brand, err := uc.GetBrandByCode(brandCode)
+	brand, err := uc.cellphonesAvailableRepository.GetBrandByCode(brandCode)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	models, err := uc.GetListOfModels(brand.Code)
+	models, err := uc.cellphonesAvailableRepository.GetListOfModels(brand.Code)
 	if err != nil {
 		return nil, nil, err
 	}

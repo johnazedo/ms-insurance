@@ -2,12 +2,12 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	simulation "github.com/johnazedo/ms-insurance/src/offer/simulation"
+	_ "github.com/johnazedo/ms-insurance/docs"
 	phonelist "github.com/johnazedo/ms-insurance/src/offer/phonelist"
+	simulation "github.com/johnazedo/ms-insurance/src/offer/simulation"
 	insurance "github.com/johnazedo/ms-insurance/src/xp/insurance"
 	swaggerFiles "github.com/swaggo/files"
-   	swagger "github.com/swaggo/gin-swagger"
-	_ "github.com/johnazedo/ms-insurance/docs"
+	swagger "github.com/swaggo/gin-swagger"
 )
 
 // @title ms-insurance
@@ -31,19 +31,19 @@ import (
 // @schemes http
 func main() {
 	simulationController := simulation.GetSimulationController()
-	phonelistController := phonelist.GetPhoneListController()
+	phoneListController := phonelist.GetPhoneListController()
 	insuranceController := insurance.GetInsuranceController()
 
 	router := gin.Default()
 	router.POST("/simulation", simulationController.GetInsuranceSimulation)
 	router.POST("/buy", simulationController.BuyInsurance)
-	router.GET("/brands", phonelistController.GetPhoneBrands)
-	router.GET("/models", phonelistController.GetPhoneModels)
+	router.GET("/brands", phoneListController.GetPhoneBrands)
+	router.GET("/models", phoneListController.GetPhoneModels)
 
 	router.POST("/cancel", insuranceController.CancelInsurance)
 	router.POST("/insurance", insuranceController.GetInsuranceInformation)
 
 	router.GET("/swagger/*any", swagger.WrapHandler(swaggerFiles.Handler))
-	
+
 	router.Run("127.0.0.1:8001")
 }
