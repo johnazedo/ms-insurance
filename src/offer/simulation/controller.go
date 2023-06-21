@@ -43,7 +43,7 @@ func (ctrl *Controller) GetInsuranceSimulation(ctx *gin.Context) {
 
 	phoneInfo, err := ctrl.getPhoneInformationUseCase.Invoke(request.PhoneBrandCode, request.PhoneModelCode)
 	if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
+		ctx.JSON(http.StatusInternalServerError, "message: Could not return information about cellphone")
 		return
 	}
 

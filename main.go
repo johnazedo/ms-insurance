@@ -25,7 +25,7 @@ import (
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host 127.0.0.1:8001
+// @host 127.0.0.1:8000
 // @BasePath /
 
 // @schemes http
@@ -45,5 +45,5 @@ func main() {
 
 	router.GET("/swagger/*any", swagger.WrapHandler(swaggerFiles.Handler))
 
-	router.Run("127.0.0.1:8001")
+	router.Run("127.0.0.1:8000")
 }

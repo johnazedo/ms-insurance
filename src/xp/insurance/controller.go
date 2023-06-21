@@ -1,8 +1,9 @@
 package insurance
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func GetInsuranceController() Controller {
@@ -42,7 +43,7 @@ func (ctrl *Controller) GetInsuranceInformation(ctx *gin.Context) {
 
 	insuranceInfo, err := ctrl.getInsuranceInfoUseCase.Invoke(request.UserID)
 	if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
+		ctx.JSON(http.StatusInternalServerError, "message: Could not get information about the insurance")
 		return
 	}
 
@@ -65,13 +66,13 @@ func (ctrl *Controller) CancelInsurance(ctx *gin.Context) {
 	var request Request
 
 	if err := ctx.BindJSON(&request); err != nil {
-		ctx.AbortWithError(http.StatusBadRequest, err)
+		ctx.JSON(http.StatusBadRequest, "message: Wrong informations sent")
 		return
 	}
 
 	insuranceInfo, err := ctrl.cancelInsuranceUseCase.Invoke(request.UserID)
 	if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
+		ctx.JSON(http.StatusInternalServerError, "message: Could not cancel this insurance")
 		return
 	}
 

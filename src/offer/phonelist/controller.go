@@ -33,7 +33,7 @@ type Controller struct {
 func (ctrl *Controller) GetPhoneBrands(ctx *gin.Context) {
 	response, err := ctrl.getListOfBrandsUseCase.Invoke()
 	if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
+		ctx.JSON(http.StatusInternalServerError, "message: Could not return the list of brands")
 		return
 	}
 
@@ -58,7 +58,7 @@ func (ctrl *Controller) GetPhoneModels(ctx *gin.Context) {
 
 	brand, models, err := ctrl.getListOfModelsUseCase.Invoke(param)
 	if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
+		ctx.JSON(http.StatusInternalServerError, "message: Could not return the list of models")
 		return
 	}
 
