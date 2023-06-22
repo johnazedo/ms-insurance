@@ -11,7 +11,7 @@ func (r *CellphonesAvailableRepositoryImpl) GetListOfBrands() ([]Brand, error) {
 			Name: "Sansumg",
 		},
 		{
-			Code: "0002",
+			Code: "0002",	
 			Name: "Motorola",
 		},
 		{
