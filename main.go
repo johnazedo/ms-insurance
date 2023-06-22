@@ -58,13 +58,14 @@ func main() {
 	logger := logs.LogServiceImpl{
 		Config: &logs.Config{
 			Microservice: os.Getenv("SERVER_NAME"),
-			Thread: "Main",
-			Context: "Default",
-			IP: host,
+			Thread:       "Main",
+			Context:      "Default",
+			IP:           host,
+			Key:          "vascobank.logs",
 		},
 		RabbitMQ: mqconnection,
 	}
-	
+
 	// Confif router
 	router := gin.Default()
 	ServeRoutes(router, &logger)

@@ -1,5 +1,7 @@
 FROM golang:1.19-alpine
 
+RUN apk add --no-cache git
+
 # Set the Current Working Directory inside the container
 WORKDIR /app
 
@@ -7,6 +9,7 @@ WORKDIR /app
 COPY go.mod ./
 COPY go.sum ./
 
+ENV GOPROXY="https://proxy.golang.org,direct"
 # Download all dependancies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
 

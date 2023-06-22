@@ -2,5 +2,12 @@ version: '3'
 services:
   web:
     build: .
+    networks:
+      - web-network
     ports:
       - "8000:8000"
+
+networks:
+  web-network:
+    external: true
+    name: rabbitmq_network
