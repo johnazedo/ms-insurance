@@ -22,7 +22,7 @@ func GetInsuranceController(logger logs.LogService) Controller {
 }
 
 type Controller struct {
-	logger logs.LogService
+	logger                  logs.LogService
 	getInsuranceInfoUseCase GetInsuranceInfoUseCase
 	cancelInsuranceUseCase  CancelInsuranceUseCase
 }
@@ -42,9 +42,9 @@ func (ctrl *Controller) GetInsuranceInformation(ctx *gin.Context) {
 
 	if err := ctx.BindJSON(&request); err != nil {
 		log := logs.LogInput{
-			Level: "ERROR",
-			Class: "InsuranceController",
-			Method: "GetInsuranceInformation",
+			Level:   "ERROR",
+			Class:   "InsuranceController",
+			Method:  "GetInsuranceInformation",
 			Message: err.Error(),
 		}
 		go ctrl.logger.SendLog(log)
@@ -57,9 +57,9 @@ func (ctrl *Controller) GetInsuranceInformation(ctx *gin.Context) {
 	if err != nil {
 		message := "message: Could not get information about the insurance"
 		log := logs.LogInput{
-			Level: "ERROR",
-			Class: "InsuranceController",
-			Method: "GetInsuranceInformation",
+			Level:   "ERROR",
+			Class:   "InsuranceController",
+			Method:  "GetInsuranceInformation",
 			Message: message,
 		}
 		go ctrl.logger.SendLog(log)
@@ -88,9 +88,9 @@ func (ctrl *Controller) CancelInsurance(ctx *gin.Context) {
 	if err := ctx.BindJSON(&request); err != nil {
 		message := "message: Wrong informations sent"
 		log := logs.LogInput{
-			Level: "ERROR",
-			Class: "InsuranceController",
-			Method: "CancelInsurance",
+			Level:   "ERROR",
+			Class:   "InsuranceController",
+			Method:  "CancelInsurance",
 			Message: message,
 		}
 		go ctrl.logger.SendLog(log)
@@ -100,11 +100,11 @@ func (ctrl *Controller) CancelInsurance(ctx *gin.Context) {
 
 	insuranceInfo, err := ctrl.cancelInsuranceUseCase.Invoke(request.UserID)
 	if err != nil {
-		message :=  "message: Could not cancel this insurance"
+		message := "message: Could not cancel this insurance"
 		log := logs.LogInput{
-			Level: "ERROR",
-			Class: "InsuranceController",
-			Method: "CancelInsurance",
+			Level:   "ERROR",
+			Class:   "InsuranceController",
+			Method:  "CancelInsurance",
 			Message: message,
 		}
 		go ctrl.logger.SendLog(log)

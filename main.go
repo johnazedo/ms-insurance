@@ -6,10 +6,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/johnazedo/ms-insurance/docs"
-	logs "github.com/johnazedo/ms-insurance/src/logs"
-	phonelist "github.com/johnazedo/ms-insurance/src/offer/phonelist"
-	simulation "github.com/johnazedo/ms-insurance/src/offer/simulation"
-	insurance "github.com/johnazedo/ms-insurance/src/xp/insurance"
+	"github.com/johnazedo/ms-insurance/src/logs"
+	"github.com/johnazedo/ms-insurance/src/offer/phonelist"
+	"github.com/johnazedo/ms-insurance/src/offer/simulation"
+	"github.com/johnazedo/ms-insurance/src/xp/insurance"
 	"github.com/joho/godotenv"
 	"github.com/streadway/amqp"
 	swaggerFiles "github.com/swaggo/files"
@@ -68,7 +68,7 @@ func main() {
 	// Confif router
 	router := gin.Default()
 	ServeRoutes(router, &logger)
-	
+
 	router.Run(fmt.Sprintf("%s:%s", host, port))
 }
 

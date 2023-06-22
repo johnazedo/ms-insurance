@@ -14,10 +14,12 @@ type Response struct {
 }
 
 type InsuranceInfo struct {
+	ID            string
 	PhoneBrand    string
 	PhoneModel    string
 	ValuePerMonth float64
 	Franchise     float64
 	Validity      string
 	Status        string
+	UserID        string
 }

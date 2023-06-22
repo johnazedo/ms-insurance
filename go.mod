@@ -10,6 +10,7 @@ require (
 )
 
 require (
+	github.com/jasonlvhit/gocron v0.0.1 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/streadway/amqp v1.1.0 // indirect
 )
