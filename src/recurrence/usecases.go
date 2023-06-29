@@ -21,15 +21,15 @@ type PaymentRepository interface {
 }
 
 type RecurrenceUseCase struct {
-	logger logs.LogService
-	insuranceRepository InsuranceRepository
-	paymentRepository PaymentRepository
+	Logger logs.LogService
+	InsuranceRepository InsuranceRepository
+	PaymentRepository PaymentRepository
 }
 
 func (uc *RecurrenceUseCase) Invoke() {
 	for {
 		time.Sleep(time.Hour * 24)
-		insurances, err := uc.insuranceRepository.GetInsurances()
+		insurances, err := uc.InsuranceRepository.GetInsurances()
 		if err != nil {
 			log := logs.LogInput{
 				Level: "ERROR",
@@ -37,15 +37,15 @@ func (uc *RecurrenceUseCase) Invoke() {
 				Method: "CancelInsurance",
 				Message: "message: Error on get insurances",
 			}
-			uc.logger.SendLog(log)
+			uc.Logger.SendLog(log)
 		}
 
 		for _, insurance := range insurances {
 			year, month, day := time.Now().Date()
 			today := fmt.Sprintf("%d/%d/%d", day, month, year)
 			if insurance.Status == "ACTIVE" && today == insurance.Validity {
-				uc.paymentRepository.MakePayment(insurance.UserID, insurance.ValuePerMonth)
-				uc.insuranceRepository.UpdateValidityInsurance(insurance.ID, time.Now().AddDate(0, 1, 0).String())
+				uc.PaymentRepository.MakePayment(insurance.UserID, insurance.ValuePerMonth)
+				uc.InsuranceRepository.UpdateValidityInsurance(insurance.ID, time.Now().AddDate(0, 1, 0).String())
 			}
 		}
 	} 

@@ -12,3 +12,9 @@ func OpenDB() *gorm.DB {
 	}
 	return db
 }
+
+func AutoMigrate(db *gorm.DB) {
+	db.AutoMigrate(&BrandModel{})
+	db.AutoMigrate(&ModelModel{})
+	db.AutoMigrate(&InsuranceInfoModel{})
+}

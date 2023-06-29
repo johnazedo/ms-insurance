@@ -5,6 +5,12 @@ RUN apk add --no-cache git
 # Set the Current Working Directory inside the container
 WORKDIR /app
 
+RUN apk add --no-cache \
+    # Important: required for go-sqlite3
+    gcc \
+    # Required for Alpine
+    musl-dev
+
 # Copy go mod and sum files
 COPY go.mod ./
 COPY go.sum ./

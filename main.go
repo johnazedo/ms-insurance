@@ -6,14 +6,15 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/johnazedo/ms-insurance/docs"
+	di "github.com/johnazedo/ms-insurance/src/di"
+	infra "github.com/johnazedo/ms-insurance/src/infra"
 	"github.com/johnazedo/ms-insurance/src/logs"
-	"github.com/johnazedo/ms-insurance/src/offer/phonelist"
-	"github.com/johnazedo/ms-insurance/src/offer/simulation"
-	"github.com/johnazedo/ms-insurance/src/xp/insurance"
+
 	"github.com/joho/godotenv"
 	"github.com/streadway/amqp"
 	swaggerFiles "github.com/swaggo/files"
 	swagger "github.com/swaggo/gin-swagger"
+	"gorm.io/gorm"
 )
 
 // @title ms-insurance
@@ -51,7 +52,7 @@ func main() {
 
 	mqconnection, err := amqp.Dial(fmt.Sprintf("amqp://%s:%s@%s:%s/", mquser, mqpassword, mqhost, mqport))
 	if err != nil {
-		panic(err)
+		// panic(err)
 	}
 	defer mqconnection.Close()
 
@@ -66,17 +67,25 @@ func main() {
 		RabbitMQ: mqconnection,
 	}
 
+	// Config database
+	db := infra.OpenDB()
+	infra.AutoMigrate(db)
+
 	// Confif router
+
+	recurrence := di.GetRecurrenceUseCase(db, &logger)
+	go recurrence.Invoke()
+	
 	router := gin.Default()
-	ServeRoutes(router, &logger)
+	ServeRoutes(router, &logger, db)
 
 	router.Run(fmt.Sprintf("%s:%s", host, port))
 }
 
-func ServeRoutes(router *gin.Engine, logger logs.LogService) {
-	simulationController := simulation.GetSimulationController()
-	phoneListController := phonelist.GetPhoneListController()
-	insuranceController := insurance.GetInsuranceController(logger)
+func ServeRoutes(router *gin.Engine, logger logs.LogService, db *gorm.DB) {
+	simulationController := di.GetSimulationController(db)
+	phoneListController := di.GetPhoneListController(db)
+	insuranceController := di.GetInsuranceController(db, logger)
 
 	router.POST("/simulation", simulationController.GetInsuranceSimulation)
 	router.POST("/buy", simulationController.BuyInsurance)

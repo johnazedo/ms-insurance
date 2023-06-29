@@ -5,21 +5,9 @@ import (
 	"net/http"
 )
 
-func GetPhoneListController() Controller {
-	repository := &CellphonesAvailableRepositoryImpl{}
-	return Controller{
-		getListOfBrandsUseCase: GetListOfBrandsUseCase{
-			cellphonesAvailableRepository: repository,
-		},
-		getListOfModelsUseCase: GetListOfModelsUseCase{
-			cellphonesAvailableRepository: repository,
-		},
-	}
-}
-
 type Controller struct {
-	getListOfBrandsUseCase GetListOfBrandsUseCase
-	getListOfModelsUseCase GetListOfModelsUseCase
+	GetListOfBrandsUseCase GetListOfBrandsUseCase
+	GetListOfModelsUseCase GetListOfModelsUseCase
 }
 
 // GetPhoneBrands godoc
@@ -31,7 +19,7 @@ type Controller struct {
 // @Success 200 {array} Brand
 // @Router /brands [get]
 func (ctrl *Controller) GetPhoneBrands(ctx *gin.Context) {
-	response, err := ctrl.getListOfBrandsUseCase.Invoke()
+	response, err := ctrl.GetListOfBrandsUseCase.Invoke()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, "message: Could not return the list of brands")
 		return
@@ -56,7 +44,7 @@ func (ctrl *Controller) GetPhoneModels(ctx *gin.Context) {
 		return
 	}
 
-	brand, models, err := ctrl.getListOfModelsUseCase.Invoke(param)
+	brand, models, err := ctrl.GetListOfModelsUseCase.Invoke(param)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, "message: Could not return the list of models")
 		return

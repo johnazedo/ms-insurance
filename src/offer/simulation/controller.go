@@ -5,23 +5,9 @@ import (
 	"net/http"
 )
 
-func GetSimulationController() Controller {
-	phoneInfoRepository := &PhoneInfoRepositoryImpl{}
-	return Controller{
-		getPhoneInformationUseCase: GetPhoneInformationUseCase{
-			phoneInfoRepository: phoneInfoRepository,
-		},
-		buyInsuranceUseCase: BuyInsuranceUseCase{
-			paymentRepository:      &PaymentRepositoryImpl{},
-			buyInsuranceRepository: &BuyInsuranceRepositoryImpl{},
-			phoneInfoRepository:    phoneInfoRepository,
-		},
-	}
-}
-
 type Controller struct {
-	getPhoneInformationUseCase GetPhoneInformationUseCase
-	buyInsuranceUseCase        BuyInsuranceUseCase
+	GetPhoneInformationUseCase GetPhoneInformationUseCase
+	BuyInsuranceUseCase        BuyInsuranceUseCase
 }
 
 // GetInsuranceSimulation godoc
@@ -41,7 +27,7 @@ func (ctrl *Controller) GetInsuranceSimulation(ctx *gin.Context) {
 		return
 	}
 
-	phoneInfo, err := ctrl.getPhoneInformationUseCase.Invoke(request.PhoneBrandCode, request.PhoneModelCode)
+	phoneInfo, err := ctrl.GetPhoneInformationUseCase.Invoke(request.PhoneBrandCode, request.PhoneModelCode)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, "message: Could not return information about cellphone")
 		return
@@ -68,7 +54,7 @@ func (ctrl *Controller) BuyInsurance(ctx *gin.Context) {
 		return
 	}
 
-	phoneInfo, paymentInfo, err := ctrl.buyInsuranceUseCase.Invoke(request.UserID, request.PhoneBrandCode, request.PhoneModelCode)
+	phoneInfo, paymentInfo, err := ctrl.BuyInsuranceUseCase.Invoke(request.UserID, request.PhoneBrandCode, request.PhoneModelCode)
 	if err != nil {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return

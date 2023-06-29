@@ -1,30 +1,15 @@
 package insurance
 
 import (
-	"errors"
 	"net/http"
-
 	"github.com/gin-gonic/gin"
 	logs "github.com/johnazedo/ms-insurance/src/logs"
 )
 
-func GetInsuranceController(logger logs.LogService) Controller {
-	repository := InsuranceRepositoryImpl{}
-	return Controller{
-		logger: logger,
-		getInsuranceInfoUseCase: GetInsuranceInfoUseCase{
-			insuranceRepository: &repository,
-		},
-		cancelInsuranceUseCase: CancelInsuranceUseCase{
-			insuranceRepository: &repository,
-		},
-	}
-}
-
 type Controller struct {
-	logger                  logs.LogService
-	getInsuranceInfoUseCase GetInsuranceInfoUseCase
-	cancelInsuranceUseCase  CancelInsuranceUseCase
+	Logger                  logs.LogService
+	GetInsuranceInfoUseCase GetInsuranceInfoUseCase
+	CancelInsuranceUseCase  CancelInsuranceUseCase
 }
 
 // GetInsuranceInformation godoc
@@ -47,13 +32,13 @@ func (ctrl *Controller) GetInsuranceInformation(ctx *gin.Context) {
 			Method:  "GetInsuranceInformation",
 			Message: err.Error(),
 		}
-		go ctrl.logger.SendLog(log)
+		go ctrl.Logger.SendLog(log)
 		ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
-	insuranceInfo, err := ctrl.getInsuranceInfoUseCase.Invoke(request.UserID)
-	err = errors.New("This is a mock error")
+	insuranceInfo, err := ctrl.GetInsuranceInfoUseCase.Invoke(request.UserID)
+	// err = errors.New("This is a mock error")
 	if err != nil {
 		message := "message: Could not get information about the insurance"
 		log := logs.LogInput{
@@ -62,7 +47,7 @@ func (ctrl *Controller) GetInsuranceInformation(ctx *gin.Context) {
 			Method:  "GetInsuranceInformation",
 			Message: message,
 		}
-		go ctrl.logger.SendLog(log)
+		go ctrl.Logger.SendLog(log)
 		ctx.JSON(http.StatusInternalServerError, message)
 		return
 	}
@@ -93,12 +78,12 @@ func (ctrl *Controller) CancelInsurance(ctx *gin.Context) {
 			Method:  "CancelInsurance",
 			Message: message,
 		}
-		go ctrl.logger.SendLog(log)
+		go ctrl.Logger.SendLog(log)
 		ctx.JSON(http.StatusBadRequest, message)
 		return
 	}
 
-	insuranceInfo, err := ctrl.cancelInsuranceUseCase.Invoke(request.UserID)
+	insuranceInfo, err := ctrl.CancelInsuranceUseCase.Invoke(request.UserID)
 	if err != nil {
 		message := "message: Could not cancel this insurance"
 		log := logs.LogInput{
@@ -107,7 +92,7 @@ func (ctrl *Controller) CancelInsurance(ctx *gin.Context) {
 			Method:  "CancelInsurance",
 			Message: message,
 		}
-		go ctrl.logger.SendLog(log)
+		go ctrl.Logger.SendLog(log)
 		ctx.JSON(http.StatusInternalServerError, message)
 		return
 	}
