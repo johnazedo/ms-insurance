@@ -6,11 +6,10 @@ services:
       - web-network
     ports:
       - "8000:8000"
+    volumes:
+      - ./database.db:/app/database.db
 
 networks:
   web-network:
     external: true
     name: rabbitmq_network
-
-volumes:
-  - ./database.db:/app/database.db
