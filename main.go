@@ -52,7 +52,7 @@ func main() {
 
 	mqconnection, err := amqp.Dial(fmt.Sprintf("amqp://%s:%s@%s:%s/", mquser, mqpassword, mqhost, mqport))
 	if err != nil {
-		panic(err)
+		// panic(err)
 	}
 	defer mqconnection.Close()
 
@@ -73,8 +73,8 @@ func main() {
 
 	// Confif router
 
-	recurrence := di.GetRecurrenceUseCase(db, &logger)
-	go recurrence.Invoke()
+	// recurrence := di.GetRecurrenceUseCase(db, &logger)
+	// go recurrence.Invoke()
 
 	router := gin.Default()
 	ServeRoutes(router, &logger, db)
