@@ -2,8 +2,8 @@ version: '3'
 services:
   web:
     build: .
-    networks:
-      - web-network
+    # networks:
+    #   - web-network
     ports:
       - "7001:7001"
     volumes:
