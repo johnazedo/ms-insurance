@@ -5,7 +5,7 @@ services:
     # networks:
     #   - web-network
     ports:
-      - "7001:7001"
+      - "8080:8080"
     volumes:
       - ./database.db:/app/database.db
 
