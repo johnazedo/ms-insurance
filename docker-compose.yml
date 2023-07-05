@@ -9,7 +9,7 @@ services:
     volumes:
       - ./database.db:/app/database.db
 
-networks:
-  web-network:
-    external: true
-    name: rabbitmq_network
+# networks:
+#   web-network:
+#     external: true
+#     name: rabbitmq_network
